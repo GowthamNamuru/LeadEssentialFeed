@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import LeadEssentialFeed
+import LeadEssentialFeed
 
 final class RemoteFeedLoaderTests: XCTestCase {
 
@@ -69,6 +69,35 @@ final class RemoteFeedLoaderTests: XCTestCase {
         expect(sut, toCompleteWith: .success([])) {
             let emptyJSON: Data = Data("{\"items\":[]}".utf8)
             client.complete(withStatusCode: 200, data: emptyJSON)
+        }
+    }
+
+
+    func test_load_deliversItemsOn200HTTPResponseWithJSONList() {
+        let (sut, client) = makeSUT()
+
+        let item1 = FeedItem(id: UUID(), description: nil, location: nil, imageUrl: URL(string: "http://a-url.com")!)
+        let item1JSON = [
+            "id": item1.id.uuidString,
+            "image": item1.imageUrl.absoluteString
+        ]
+
+        let item2 = FeedItem(id: UUID(), description: "a description", location: "a location", imageUrl: URL(string: "http://a-url.com")!)
+
+        let item2JSON = [
+            "id": item2.id.uuidString,
+            "location": item2.location,
+            "description": item2.description,
+            "image": item2.imageUrl.absoluteString
+        ]
+
+        let itemsJSON = [
+            "items": [item1JSON, item2JSON]
+        ]
+
+        expect(sut, toCompleteWith: .success([item1, item2])) {
+            let json = try! JSONSerialization.data(withJSONObject: itemsJSON)
+            client.complete(withStatusCode: 200, data: json)
         }
     }
 
