@@ -15,4 +15,5 @@ extension XCTestCase {
             XCTAssertNil(instance, "Instance should have been deallocated", file: file, line: line)
         }
     }
+    
 }
