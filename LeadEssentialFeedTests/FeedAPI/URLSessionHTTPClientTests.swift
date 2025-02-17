@@ -25,6 +25,21 @@ class URLSessionHTTPClient {
 
 final class URLSessionHTTPClientTests: XCTestCase {
 
+    func test_getFromURL_performsGETRequestWithURL() {
+        URLProtocolStub.startInterceptingRequest()
+        let url = URL(string: "http://any-url.com")!
+        let exp = expectation(description: "Wait for request")
+        URLProtocolStub.observeRequest { request in
+            XCTAssertEqual(request.url, url)
+            XCTAssertEqual(request.httpMethod, "GET")
+            exp.fulfill()
+        }
+
+        URLSessionHTTPClient().get(from: url) { _ in }
+        wait(for: [exp], timeout: 1.0)
+        URLProtocolStub.stopInterceptingRequest()
+    }
+
     func test_getFromURL_failsOnRequestError() {
         URLProtocolStub.startInterceptingRequest()
         let url = URL(string: "http://any-url.com")!
@@ -49,6 +64,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
     // MARK: - Helper
     private class URLProtocolStub: URLProtocol {
         private static var stub: Stub?
+        private static var requestObserver: ((URLRequest) -> Void)?
 
         private struct Stub {
             let data: Data?
@@ -64,11 +80,18 @@ final class URLSessionHTTPClientTests: XCTestCase {
             URLProtocolStub.registerClass(URLProtocolStub.self)
         }
 
+        static func observeRequest(_ completion: @escaping (URLRequest) -> Void) {
+            requestObserver = completion
+        }
+
         static func stopInterceptingRequest() {
             URLProtocolStub.unregisterClass(URLProtocolStub.self)
+            stub = nil
+            requestObserver = nil
         }
 
         override class func canInit(with request: URLRequest) -> Bool {
+            requestObserver?(request)
             return true
         }
 
@@ -77,10 +100,6 @@ final class URLSessionHTTPClientTests: XCTestCase {
         }
 
         override func startLoading() {
-            guard let url = request.url else {
-                return
-            }
-
             if let data = Self.stub?.data {
                 client?.urlProtocol(self, didLoad: data)
             }
