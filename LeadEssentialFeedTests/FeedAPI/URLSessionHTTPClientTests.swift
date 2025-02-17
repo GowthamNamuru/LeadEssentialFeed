@@ -59,8 +59,18 @@ final class URLSessionHTTPClientTests: XCTestCase {
         XCTAssertEqual(receivedError?.domain, requestedError.domain)
     }
 
-    func test_getFromURL_failsOnAllNilValues() {
-        XCTAssertNotNil(resultErrorFor(data: nil, response: nil, error: nil) as? NSError)
+    func test_getFromURL_failsOnAllInvalidRepresentationCases() {
+
+        XCTAssertNotNil(resultErrorFor(data: nil, response: nil, error: nil))
+        XCTAssertNotNil(resultErrorFor(data: nil, response: nonHTTPURLResponse(), error: nil))
+        XCTAssertNotNil(resultErrorFor(data: nil, response: anyHTTPURLResponse(), error: nil))
+        XCTAssertNotNil(resultErrorFor(data: anyData(), response: nil, error: nil))
+        XCTAssertNotNil(resultErrorFor(data: anyData(), response: nil, error: anyNSError()))
+        XCTAssertNotNil(resultErrorFor(data: nil, response: nonHTTPURLResponse(), error: anyNSError()))
+        XCTAssertNotNil(resultErrorFor(data: nil, response: anyHTTPURLResponse(), error: anyNSError()))
+        XCTAssertNotNil(resultErrorFor(data: anyData(), response: nonHTTPURLResponse(), error: anyNSError()))
+        XCTAssertNotNil(resultErrorFor(data: anyData(), response: anyHTTPURLResponse(), error: anyNSError()))
+        XCTAssertNotNil(resultErrorFor(data: anyData(), response: nonHTTPURLResponse(), error: nil))
     }
 
     // MARK: - Helper
@@ -71,6 +81,21 @@ final class URLSessionHTTPClientTests: XCTestCase {
         return sut
     }
 
+    private func anyData() -> Data {
+        Data("any data".utf8)
+    }
+
+    private func anyNSError() -> NSError {
+        NSError(domain: "any error", code: 1)
+    }
+
+    private func nonHTTPURLResponse() -> URLResponse {
+        URLResponse(url: anyURL(), mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
+    }
+
+    private func anyHTTPURLResponse() -> HTTPURLResponse? {
+        HTTPURLResponse(url: anyURL(), statusCode: 200, httpVersion: nil, headerFields: nil)
+    }
 
     private func resultErrorFor(data: Data?, response: URLResponse?, error: Error?,
                                 file: StaticString = #filePath,
