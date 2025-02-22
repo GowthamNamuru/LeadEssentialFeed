@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		154409C02D52EC35001D551E /* LeadEssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 154409B52D52EC35001D551E /* LeadEssentialFeed.framework */; };
 		15C1051F2D63614700E7776A /* LeadEssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 154409B52D52EC35001D551E /* LeadEssentialFeed.framework */; };
+		15E75B142D6A0D0B0053DCE3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 15E75B132D6A0D0B0053DCE3 /* README.md */; };
+		15E75B152D6A0D0B0053DCE3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 15E75B132D6A0D0B0053DCE3 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +34,7 @@
 		154409B52D52EC35001D551E /* LeadEssentialFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LeadEssentialFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		154409BF2D52EC35001D551E /* LeadEssentialFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LeadEssentialFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		15C1051B2D63614700E7776A /* EssentialFeedAPIEndToEndTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeedAPIEndToEndTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		15E75B132D6A0D0B0053DCE3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		15F04A7C2D639A4800E0B222 /* LeadEssentialFeed.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = LeadEssentialFeed.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -106,6 +109,7 @@
 		154409AB2D52EC35001D551E = {
 			isa = PBXGroup;
 			children = (
+				15E75B132D6A0D0B0053DCE3 /* README.md */,
 				15F04A7C2D639A4800E0B222 /* LeadEssentialFeed.xctestplan */,
 				154409B72D52EC35001D551E /* LeadEssentialFeed */,
 				154409C32D52EC35001D551E /* LeadEssentialFeedTests */,
@@ -253,6 +257,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15E75B152D6A0D0B0053DCE3 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,6 +272,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15E75B142D6A0D0B0053DCE3 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
