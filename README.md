@@ -21,13 +21,14 @@
 
 #### Primary Course:
 1. Execute "Load Image Feed" command with above data
-2. System Fetches feed data from cache.
+2. System retrieves feed data from cache.
 3. System validates cache is less than seven days old.
 4. System creates image feed from cached data.
 5. System delivers image feed.
 
-#### Error course (Sad path):
-1. System delivers error.
+#### Retrieval Error course (Sad path):
+1. System Deletes cache
+2. System delivers error.
 
 #### Expired cache course (sad path):
 1. System deletes cache.
