@@ -102,16 +102,6 @@ final class CacheFeedUseCaseTests: XCTestCase {
         return (sut, store)
     }
 
-    private func uniqueImage() -> FeedImage {
-        FeedImage(id: UUID(), description: "any", location: "any", url: anyURL())
-    }
-
-    private func uniqueImageFeed() -> (models: [FeedImage], local: [LocalFeedImage]) {
-        let models = [uniqueImage(), uniqueImage()]
-        let local = models.map { LocalFeedImage(id: $0.id, description: $0.description, location: $0.location, url: $0.url) }
-        return (models, local)
-    }
-
     private func expect(sut: LocalFeedLoader, toCompleteWithError expectedError: NSError?, action: () -> Void, file: StaticString = #filePath,
                         line: UInt = #line) {
         let exp = expectation(description: "Wait for save to complete")
