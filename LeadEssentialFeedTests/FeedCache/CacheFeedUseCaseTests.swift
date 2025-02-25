@@ -112,14 +112,6 @@ final class CacheFeedUseCaseTests: XCTestCase {
         return (models, local)
     }
 
-    private func anyURL() -> URL {
-        return URL(string: "http://any-url.com")!
-    }
-
-    private func anyNSError() -> NSError {
-        NSError(domain: "any error", code: 1)
-    }
-
     private func expect(sut: LocalFeedLoader, toCompleteWithError expectedError: NSError?, action: () -> Void, file: StaticString = #filePath,
                         line: UInt = #line) {
         let exp = expectation(description: "Wait for save to complete")
