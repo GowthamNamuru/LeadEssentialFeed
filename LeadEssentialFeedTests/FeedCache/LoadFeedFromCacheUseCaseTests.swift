@@ -136,7 +136,7 @@ final class LoadFeedFromCacheUseCaseTests: XCTestCase {
         var sut: LocalFeedLoader? = LocalFeedLoader(store: store, currentDate: Date.init)
 
         var receivedMessage = [LocalFeedLoader.LoadResult]()
-        sut?.load(completion: { receivedMessage.append($0) })
+        sut?.load { receivedMessage.append($0) }
 
         sut = nil
         store.completeRetrievalWithEmptyCache()
