@@ -7,8 +7,6 @@
 
 import LeadEssentialFeed
 
-
-
 func uniqueImage() -> FeedImage {
     FeedImage(id: UUID(), description: "any", location: "any", url: anyURL())
 }
