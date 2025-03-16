@@ -1,0 +1,33 @@
+{
+  "configurations" : [
+    {
+      "id" : "195FDF15-9235-4CA7-A9ED-B2269ACBAEE6",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:LeadEssentialFeed.xcodeproj",
+          "identifier" : "15D8DF7B2D869418007B336F",
+          "name" : "EssentialFeediOS"
+        }
+      ]
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:LeadEssentialFeed.xcodeproj",
+        "identifier" : "15D8DF842D869418007B336F",
+        "name" : "EssentialFeediOSTests"
+      }
+    }
+  ],
+  "version" : 1
+}
