@@ -56,6 +56,7 @@
 		15D8DF7C2D869418007B336F /* EssentialFeediOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EssentialFeediOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		15D8DF852D869418007B336F /* EssentialFeediOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeediOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		15D8DF942D869459007B336F /* EssentialFeediOS.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = EssentialFeediOS.xctestplan; sourceTree = "<group>"; };
+		15D8DF952D8697D2007B336F /* CI_iOS.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = CI_iOS.xctestplan; path = ../CI_iOS.xctestplan; sourceTree = "<group>"; };
 		15E75B132D6A0D0B0053DCE3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		15F04A7C2D639A4800E0B222 /* LeadEssentialFeed.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = LeadEssentialFeed.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -185,6 +186,7 @@
 				153B28542D8514BA00F8D5DB /* EssentialFeedCacheIntegrationTests.xctestplan */,
 				15E75B132D6A0D0B0053DCE3 /* README.md */,
 				15F04A7C2D639A4800E0B222 /* LeadEssentialFeed.xctestplan */,
+				15D8DF952D8697D2007B336F /* CI_iOS.xctestplan */,
 				154409B72D52EC35001D551E /* LeadEssentialFeed */,
 				154409C32D52EC35001D551E /* LeadEssentialFeedTests */,
 				15C1051C2D63614700E7776A /* EssentialFeedAPIEndToEndTests */,
