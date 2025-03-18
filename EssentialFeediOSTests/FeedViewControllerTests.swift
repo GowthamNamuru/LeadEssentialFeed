@@ -47,21 +47,21 @@ final class FeedViewControllerTests: XCTestCase {
 
     func test_loadFeedActions_requestedFeedFromLoader() {
         let (sut, loader) = makeSUT()
-        XCTAssertEqual(loader.loadCallCount, 0)
+        XCTAssertEqual(loader.loadCallCount, 0, "Expected no loading requests before view is loaded")
 
         sut.loadViewIfNeeded()
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
-        XCTAssertEqual(loader.loadCallCount, 1)
+        XCTAssertEqual(loader.loadCallCount, 1, "Expected a loading request once view is loaded")
 
         sut.simulateUserInitiatedFeedReload()
-        XCTAssertEqual(loader.loadCallCount, 2)
+        XCTAssertEqual(loader.loadCallCount, 2, "Expected another loading request once user initiates a load")
 
         sut.simulateUserInitiatedFeedReload()
-        XCTAssertEqual(loader.loadCallCount, 3)
+        XCTAssertEqual(loader.loadCallCount, 3, "Expected a third loading request once user ibniate another load")
     }
 
-    func test_viewDidLoad_showsLoadingIndicator() {
+    func test_loadingFeedIndicator_isVisibleWhileLoadingFeed() {
         let (sut, loader) = makeSUT()
 
         sut.loadViewIfNeeded()
@@ -69,16 +69,17 @@ final class FeedViewControllerTests: XCTestCase {
 
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
-        XCTAssertEqual(sut.isShowingLoadingIndicator, true)
+        XCTAssertEqual(sut.isShowingLoadingIndicator, true, "Expected loading indicator once view is loaded")
 
         loader.completeFeedLoading(at: 0)
-        XCTAssertEqual(sut.isShowingLoadingIndicator, false)
+        XCTAssertEqual(sut.isShowingLoadingIndicator, false, "Expected no loading indicatore once loading is complete")
 
         sut.simulateUserInitiatedFeedReload()
-        XCTAssertEqual(sut.isShowingLoadingIndicator, true)
+        XCTAssertEqual(sut.isShowingLoadingIndicator, true, "Expected loading indicator once user initiates a reload")
 
         loader.completeFeedLoading(at: 1)
-        XCTAssertEqual(sut.isShowingLoadingIndicator, false)
+        XCTAssertEqual(sut.isShowingLoadingIndicator, false,
+                       "Expected no loading indicator once user initiated loading is completed")
     }
 
     // MARK: - Helpers
