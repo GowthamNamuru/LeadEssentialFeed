@@ -386,8 +386,8 @@ private extension FeedViewController {
                 fake.addTarget(target, action: Selector(action), for: .valueChanged)
             }
         }
-        
         refreshControl = fake
+        refreshController?.view = fake
     }
 
     func simulateUserInitiatedFeedReload() {
@@ -500,7 +500,7 @@ private extension UIImage {
 //        context.fill(rect)
 //        let img = UIGraphicsGetImageFromCurrentImageContext()
 //        UIGraphicsEndImageContext()
-//        return img!
+//        return img!x
         let format = UIGraphicsImageRendererFormat()
         format.scale = 1
         return UIGraphicsImageRenderer(size: rect.size, format: format).image { rendererContex in
