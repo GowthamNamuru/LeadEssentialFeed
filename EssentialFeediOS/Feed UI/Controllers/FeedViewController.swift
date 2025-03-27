@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import LeadEssentialFeed
 
 final public class FeedViewController: UITableViewController, UITableViewDataSourcePrefetching {
     var tableModel: [FeedImageCellController] = [] {
