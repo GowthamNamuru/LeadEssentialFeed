@@ -5,17 +5,19 @@
 //  Created by Gowtham Namuru on 27/03/25.
 //
 
-import UIKit
+//import UIKit
 import LeadEssentialFeed
 
-final class FeedImageViewModel {
+final class FeedImageViewModel<Image> {
     private var model: FeedImage
     private var imageLoader: FeedImageDataLoader
     private var task: FeedImageDataLoaderTask?
+    private var imageTransformer: (Data) -> Image?
 
-    init(model: FeedImage, imageLoader: FeedImageDataLoader) {
+    init(model: FeedImage, imageLoader: FeedImageDataLoader, imageTransformer: @escaping (Data) -> Image?) {
         self.model = model
         self.imageLoader = imageLoader
+        self.imageTransformer = imageTransformer
     }
 
     var description: String? {
@@ -30,7 +32,7 @@ final class FeedImageViewModel {
         model.location != nil
     }
 
-    var onImageLoad: ((UIImage) -> Void)?
+    var onImageLoad: ((Image) -> Void)?
     var onImageLoadingStateChange: ((Bool) -> Void)?
     var onShouldRetryImageLoadStateChange: ((Bool) -> Void)?
 
@@ -38,13 +40,17 @@ final class FeedImageViewModel {
         onImageLoadingStateChange?(true)
         onShouldRetryImageLoadStateChange?(false)
         task = imageLoader.loadImageData(from: model.url, completion: { [weak self] result in
-            if let image = (try? result.get()).flatMap(UIImage.init) {
-                self?.onImageLoad?(image)
-            } else {
-                self?.onShouldRetryImageLoadStateChange?(true)
-            }
-            self?.onImageLoadingStateChange?(false)
+            self?.handle(result)
         })
+    }
+
+    private func handle(_ result: FeedImageDataLoader.Result) {
+        if let image = (try? result.get()).flatMap(imageTransformer) {
+            onImageLoad?(image)
+        } else {
+            onShouldRetryImageLoadStateChange?(true)
+        }
+        onImageLoadingStateChange?(false)
     }
 
     func cancelImageDataLoad() {
