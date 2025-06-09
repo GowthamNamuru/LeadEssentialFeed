@@ -262,8 +262,22 @@ final class FeedViewControllerTests: XCTestCase {
         sut.simulateFeedImageViewNotNearVisible(at: 0)
         XCTAssertEqual(loader.cancelledImageURLs, [image0.url], "Expected first cancelled image URL request once first image is not near visible anymore")
 
-//        sut.simulateFeedImageViewNotNearVisible(at: 1)
-//        XCTAssertEqual(loader.cancelledImageURLs, [image0.url, image1.url], "Expected second cancelled image URL request once second image is not near visible anymore")
+        sut.simulateFeedImageViewNotNearVisible(at: 1)
+        XCTAssertEqual(loader.cancelledImageURLs, [image0.url, image1.url], "Expected second cancelled image URL request once second image is not near visible anymore")
+    }
+
+
+    func test_feedImageView_doesNotRenderLoadedImageWhenNotVisibleAnyMore() {
+        let (sut, loader) = makeSUT()
+        sut.loadViewIfNeeded()
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        loader.completeFeedLoading(with: [makeImage()], at: 0)
+
+        let view = sut.simulateFeedImageViewNotVisible(at: 0)
+        loader.completeImageLoading(with: UIImage.make(withColor: .red).pngData()!)
+
+        XCTAssertNil(view?.renderedImage, "Expected no rendered image when an image load finishes after the view is not visible anymore")
     }
 
     // MARK: - Helpers
@@ -418,12 +432,14 @@ private extension FeedViewController {
         return feedImageView(at: index) as? FeedImageCell
     }
 
-    func simulateFeedImageViewNotVisible(at index: Int) {
-        let view = feedImageView(at: index)
+    @discardableResult
+    func simulateFeedImageViewNotVisible(at index: Int) -> FeedImageCell? {
+        let view = simulateFeedImageViewVisible(at: index)
 
         let delegate = tableView.delegate
         let index = IndexPath(row: index, section: feedImageSection)
         delegate?.tableView?(tableView, didEndDisplaying: view!, forRowAt: index)
+        return view
     }
 
     func simulateFeedImageViewNearVisible(at index: Int) {
