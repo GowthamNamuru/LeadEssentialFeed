@@ -11,14 +11,18 @@ import LeadEssentialFeed
 
 final class FeedViewControllerTests: XCTestCase {
 
-
     func test_feedView_hasTitle() {
         let (sut, _) = makeSUT()
         sut.loadViewIfNeeded()
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
 
-        XCTAssertEqual(sut.title, "My Feed")
+        let bundle = Bundle(for: FeedViewController.self)
+        let localizeKey = "FEED_VIEW_TITLE"
+        let localizedTitle = bundle.localizedString(forKey: localizeKey, value: nil, table: "Feed")
+
+        XCTAssertNotEqual(localizeKey, localizedTitle, "Missing localized string for key: \(localizeKey)")
+        XCTAssertEqual(sut.title, localizedTitle)
     }
 
     func test_loadFeedActions_requestedFeedFromLoader() {
